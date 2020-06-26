@@ -40,6 +40,16 @@ namespace CrunchBaseAPITest
                 });
             });
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy",
+                    builder => builder
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .SetIsOriginAllowed((host) => true)
+                        .AllowAnyHeader());
+            });
+            
             services.AddDbContext<CrunchBaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DataContext")));
         }
 
@@ -63,6 +73,7 @@ namespace CrunchBaseAPITest
 
             app.UseAuthorization();
 
+            app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
