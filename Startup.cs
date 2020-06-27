@@ -13,12 +13,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 
 namespace CrunchBaseAPITest
 {
     public class Startup
     {
+        private readonly string CorsAllowedPolicy = "_myAllowedPolicy";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,7 +31,7 @@ namespace CrunchBaseAPITest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            
             services.AddSwaggerGen(c => 
             {
                 c.SwaggerDoc("v1",new OpenApiInfo
@@ -40,17 +42,19 @@ namespace CrunchBaseAPITest
                 });
             });
             services.AddControllers();
-            services.AddCors(options =>
+            services.AddCors(options => 
             {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder
-                        .AllowAnyMethod()
-                        .AllowCredentials()
-                        .SetIsOriginAllowed((host) => true)
-                        .AllowAnyHeader());
+                options.AddPolicy(name: CorsAllowedPolicy,
+                    builder =>
+                    {
+                        builder.AllowAnyHeader();
+                        builder.AllowAnyMethod();
+                        builder.AllowAnyOrigin();
+                    });
             });
             
             services.AddDbContext<CrunchBaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DataContext")));
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +65,7 @@ namespace CrunchBaseAPITest
                 app.UseDeveloperExceptionPage();
             }
 
+            
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
@@ -72,12 +77,13 @@ namespace CrunchBaseAPITest
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseCors("CorsPolicy");
+            app.UseCors(CorsAllowedPolicy);
+      
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+            
         }
     }
 }

@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CrunchBaseAPITest.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace CrunchBaseAPITest.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class AccountsController : ControllerBase
     {
         private readonly CrunchBaseContext _context;
