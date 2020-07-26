@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1sGRwZ71ErMW5CmNVW1LDg9WM+jkRTf1a5ph0jHBerJMxjRE3dYNqzoqVI140AR6FYL74uNWdBtDoJOjlJ+M+Q==",
+  "dgSpecHash": "4qqnWOhz6wMndckhu0FVzzxGQ/bVPwnhLLVCTlVgvutWUsvziDk2EPU7ZB+P57a/lcoKARzXGt6WXTaJhCoICA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\source\\repos\\CrunchBaseAPITest\\CrunchBaseAPITest.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\source\\CrunchBaseAPI\\CrunchBaseAPITest.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\entityframework\\6.1.0\\entityframework.6.1.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnet.identity.core\\2.2.3\\microsoft.aspnet.identity.core.2.2.3.nupkg.sha512",
